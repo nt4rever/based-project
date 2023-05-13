@@ -85,6 +85,8 @@ Here are some related projects
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sourceLanguage": "en"
 }
+```
+
 ## Contributors
 
 - [@nt4rever](https://www.github.com/nt4rever)
