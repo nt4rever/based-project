@@ -78,7 +78,13 @@ export const StyledRadio = styled(Radio.Group)`
 Here are some related projects
 
 [i18n Ally - Manage All Translations in One Place](https://github.com/lokalise/i18n-ally)
-
+```json
+//vscode setting
+{
+  "i18n-ally.localesPaths": ["src/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "en"
+}
 ## Contributors
 
 - [@nt4rever](https://www.github.com/nt4rever)
