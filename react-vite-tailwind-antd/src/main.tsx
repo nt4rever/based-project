@@ -6,7 +6,7 @@ import App from './App.tsx';
 import './index.css';
 import store from './store';
 
-ReactDOM.createRoot(document.getElementById('napa-root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <React.StrictMode>
       <App />
