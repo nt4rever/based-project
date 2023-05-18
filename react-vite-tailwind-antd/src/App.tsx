@@ -21,7 +21,11 @@ function App() {
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' panelPosition='right' />
+        <ReactQueryDevtools
+          initialIsOpen={false}
+          position='bottom-right'
+          panelPosition='right'
+        />
       </QueryClientProvider>
     </PersistGate>
   );

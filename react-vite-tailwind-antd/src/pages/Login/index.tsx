@@ -1,68 +1,79 @@
-import styled from '@emotion/styled';
-import { Button, Radio } from 'antd';
+import { Form, Input } from 'antd';
 import { FC, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '~/hooks';
-import { authActions } from '~/store/ducks/auth/slice';
+import { Button } from '~/components/shared/Button';
+import { FormItem } from '~/components/shared/Form';
+import { LoginInput } from '~/hooks';
+import useAuth from '~/hooks/useAuth';
 
 const Login: FC = (): ReactElement => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { login, isLoading } = useAuth();
 
-  const handleLogin = () => {
-    dispatch(
-      authActions.loginSuccess({
-        user: {
-          name: 'tan'
-        }
-      })
-    );
+  const initialValues: LoginInput = {
+    username: '',
+    password: ''
   };
 
-  const StyledRadio = styled(Radio.Group)`
-    & .ant-radio-button-wrapper {
-      &:first-of-type {
-        border-radius: 10px 0 0 10px;
-      }
-      &:last-of-type {
-        border-radius: 0 10px 10px 0;
-      }
-      color: green;
-      &.ant-radio-button-wrapper-checked {
-        background-color: green;
-        color: whitesmoke;
-        border-color: green;
-
-        &:before {
-          background-color: green;
-        }
-        &:hover {
-          background-color: green;
-          border-color: green;
-        }
-      }
-    }
-  `;
+  const handleSubmit = (values: LoginInput) => {
+    login(values);
+  };
 
   return (
-    <div>
-      <Button className='mt-2 rounded-3xl bg-slate-500' type='primary' onClick={handleLogin}>
-        {t('common.login')}
-      </Button>
-      <StyledRadio defaultValue='a' buttonStyle='solid' className='ml-2'>
-        <Radio.Button value='a'>Hangzhou</Radio.Button>
-        <Radio.Button value='b'>Shanghai</Radio.Button>
-        <Radio.Button value='c'>Beijing</Radio.Button>
-        <Radio.Button value='d'>Chengdu</Radio.Button>
-      </StyledRadio>
-      <Radio.Group defaultValue='c' buttonStyle='solid' style={{ marginTop: 16 }} className='ml-2'>
-        <Radio.Button value='a'>Hangzhou</Radio.Button>
-        <Radio.Button value='b' disabled>
-          Shanghai
-        </Radio.Button>
-        <Radio.Button value='c'>Beijing</Radio.Button>
-        <Radio.Button value='d'>Chengdu</Radio.Button>
-      </Radio.Group>
+    <div className='min-w-[464px] overflow-hidden rounded-2xl border border-solid border-[#D1D1D1] bg-white'>
+      <div className='border-0 border-b border-solid border-primary bg-secondary p-4 text-center text-primary'>
+        <h2 className='font-bold'>_tannnguci</h2>
+      </div>
+      <div className='p-6'>
+        <Form
+          layout='vertical'
+          autoComplete='off'
+          initialValues={initialValues}
+          onFinish={handleSubmit}
+        >
+          <FormItem
+            name='username'
+            required={false}
+            label={t('common.username')}
+            extra={`${t('common.acc_without')} @example.com (${t(
+              'common.example'
+            )}: tannnguci)`}
+            rules={[
+              {
+                required: true,
+                message:
+                  t('validation.username_required') || 'Please input your username!'
+              }
+            ]}
+          >
+            <Input type='text' placeholder='email@example.com' />
+          </FormItem>
+          <FormItem
+            required={false}
+            name='password'
+            label={t('common.password')}
+            rules={[
+              {
+                required: true,
+                message:
+                  t('validation.password_required') || 'Please input your password!'
+              }
+            ]}
+          >
+            <Input type='password' placeholder={t('common.password') || 'Password'} />
+          </FormItem>
+          <FormItem>
+            <Button
+              type='primary'
+              htmlType='submit'
+              loading={isLoading}
+              className='mt-2 w-full'
+            >
+              {t('common.login')}
+            </Button>
+          </FormItem>
+        </Form>
+      </div>
     </div>
   );
 };

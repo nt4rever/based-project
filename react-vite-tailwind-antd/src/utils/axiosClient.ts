@@ -12,7 +12,9 @@ axiosClient.interceptors.request.use(
   function (config) {
     config.headers['Content-Type'] = 'application/json';
     if (getLocalStorage(KEY_LOCAL_STORAGE.ACCESS_TOKEN)) {
-      config.headers['Authorization'] = `Bearer ${getLocalStorage(KEY_LOCAL_STORAGE.ACCESS_TOKEN)}`;
+      config.headers['Authorization'] = `Bearer ${getLocalStorage(
+        KEY_LOCAL_STORAGE.ACCESS_TOKEN
+      )}`;
     }
     return config;
   },

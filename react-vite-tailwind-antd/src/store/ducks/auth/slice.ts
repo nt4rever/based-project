@@ -1,42 +1,32 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IUser } from '~/@types/auth';
 import { saveLocalStorage, removeLocalStorage, KEY_LOCAL_STORAGE } from '~/utils/storage';
-
-export interface User {
-  email: string;
-  accessToken: string;
-}
 
 export interface AuthState {
   isLoggedIn: boolean;
-  loading?: boolean;
   accessToken?: boolean;
-  currentUser?: User;
+  currentUser?: IUser;
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  loading: false,
   accessToken: undefined,
   currentUser: undefined
 };
+
+interface AuthPayload {
+  user: IUser;
+  token: string;
+}
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loading(state) {
-      state.loading = true;
-      return state;
-    },
-    loginSuccess(state, action: PayloadAction<any>) {
+    loginSuccess(state, action: PayloadAction<AuthPayload>) {
       state.isLoggedIn = true;
-      state.loading = false;
       state.currentUser = action.payload?.user;
       saveLocalStorage(KEY_LOCAL_STORAGE.ACCESS_TOKEN, action.payload?.token);
-      return state;
-    },
-    loginFailed(state) {
-      state.loading = false;
       return state;
     },
     logout(state) {
