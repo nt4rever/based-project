@@ -1,8 +1,8 @@
-import { authActions } from '~/store/ducks/auth/slice';
-import { useAppDispatch } from '.';
-import { IUser } from '~/@types/auth';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IUser } from '~/@types/auth';
+import { authActions } from '~/store/ducks/auth/slice';
+import { useAppDispatch, useAppSelector } from '.';
 
 export interface LoginInput {
   username: string;
@@ -10,9 +10,12 @@ export interface LoginInput {
 }
 
 const useAuth = () => {
+  const { isLoggedIn, currentUser } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const auth = isLoggedIn ? currentUser : null;
 
   const login = async (loginInput: LoginInput) => {
     setIsLoading(true);
@@ -36,9 +39,10 @@ const useAuth = () => {
       })
     );
     setIsLoading(false);
-    navigate('/');
+    navigate(location.state?.path || '/');
   };
-  return { login, isLoading };
+
+  return { login, isLoading, auth };
 };
 
-export default useAuth;
+export { useAuth };

@@ -8,6 +8,7 @@ const MainPage: FC = (): ReactElement => {
     <MainLayout>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/login' element={<Navigate to={'/'} replace />} />
         <Route path='*' element={<Navigate to={'404'} replace />} />
       </Routes>

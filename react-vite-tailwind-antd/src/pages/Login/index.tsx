@@ -3,8 +3,7 @@ import { FC, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/shared/Button';
 import { FormItem } from '~/components/shared/Form';
-import { LoginInput } from '~/hooks';
-import useAuth from '~/hooks/useAuth';
+import { LoginInput, useAuth } from '~/hooks';
 
 const Login: FC = (): ReactElement => {
   const { t } = useTranslation();
@@ -43,6 +42,9 @@ const Login: FC = (): ReactElement => {
                 required: true,
                 message:
                   t('validation.username_required') || 'Please input your username!'
+              },
+              {
+                max: 20
               }
             ]}
           >
@@ -57,6 +59,10 @@ const Login: FC = (): ReactElement => {
                 required: true,
                 message:
                   t('validation.password_required') || 'Please input your password!'
+              },
+              {
+                min: 6,
+                max: 20
               }
             ]}
           >
